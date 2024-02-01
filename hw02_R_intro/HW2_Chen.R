@@ -84,3 +84,4 @@ unique_distance <- unique(our_data$distance.mi)
 print("Unique distance.mi:")
 print(unique_distance)
 
+
