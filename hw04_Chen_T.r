@@ -70,10 +70,10 @@ library("readxl")
 dogs = readRDS('dogs.rds')
 #     a. How many missing values are in the `height` column? 
 #       [code completion + comprehension]
-#     This code checks each value in the height column of the dogs dataset to see 
-#     if it's missing (NA). 
-#     It returns a logical vector where TRUE indicates a missing value and 
-#     FALSE indicates a non-missing value. And sum them up save it to 'missing_height'
+##     This code checks each value in the height column of the dogs dataset to see
+##     if it's missing (NA).
+##     It returns a logical vector where TRUE indicates a missing value and
+##     FALSE indicates a non-missing value. And sum them up save it to 'missing_height'
       missing_height <- sum(is.na(dogs$height))
       #The are 13 missing value in 'height' column
       #Print out the answer 
