@@ -1,3 +1,5 @@
+#emf - good job overall! Small reduction of points for the output of #4 (see comments by searching "emf"). Make sure that you are annotating/translating more of your code - even if you have experience using R.
+
 library(readr)
 my_data <- read_csv("Desktop/STS_115/hw02_R_intro/my_data.csv")
 
@@ -18,7 +20,7 @@ our_data <- rbind(my_data, new_data)
 
 # 2. Come up with a yes/no or true/false question you’d have liked the survey to have asked. Make up these data for every subject in the survey, then create it as a logical vector and add it to the data frame.
 # Are you acquainted with Idrila the Beauty is the most peerless beauty of them all?
-responses <- sample(c(TRUE, FALSE), nrow(our_data), replace = TRUE)
+responses <- sample(c(TRUE, FALSE), nrow(our_data), replace = TRUE) #emf - make sure you tell us what this code is doing
 our_data$responses <- responses
 
 # 3. Use a single function to return the class of each column in the data frame.
@@ -29,6 +31,7 @@ print(column_classes)
 longest_commute_distance <- max(our_data$distance.mi)
 longest_travel_time <- max(our_data$time.min)
 print(longest_travel_time)
+#emf - NA values are obscuring the max distance and time
 
 # 5. Calculate travel speed across subjects as miles per minute. Assign this to a new vector `mi.per.min` and add it to the data frame.
 mi.per.min <- our_data$distance.mi / our_data$time.min
@@ -44,6 +47,7 @@ print(subset_major)
 
 # 8. R’s `[` indexing operator accepts several different types of indexes, not only positive whole numbers. For example, the operator accepts negative numbers as indexes. Using the vector `places`, try out three to five different negative indexes. Based on the results, what do you think the [ operator does with negative indexes?
 # It remove the element at 2
+#emf - could be a bit more specific
 negative_index_result_1 <- our_data$location[-2]
 print(negative_index_result_1)
 negative_index_result_2 <- our_data$location[-1]
@@ -68,6 +72,7 @@ print(class(result))
 ## > "four" < "five"
 ## [1] FALSE
 ## Because R will perform lexicographic comparison with the string
+#emf - would be good to elaborate on this
 
 # 11. There are several major mistakes in the data entered in class.
 # a. Describe in complete sentences what at least 2 of the errors are. Make some guesses as to how those errors may have happened, and how they might affect analyses and/or re-use of these data.

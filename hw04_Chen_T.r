@@ -1,3 +1,5 @@
+# emf - good job! See comments/suggestions below by searching for "emf".
+
 # Directions:
 
 # This file contains homework questions for the lecture on working with files
@@ -131,11 +133,15 @@ dogs = readRDS('dogs.rds')
         daily_grooming_dogs <- dogs[grooming_condition, ]
         #Print out the number of row of dogs that need daily grooming
         print(nrow(daily_grooming_dogs))
+        # emf - good - how many rows are there? (need to answer the question directly)
+        
 #     c. Use the `table` function to compute the number of dogs in each
 #        grooming category. You should see a different count than in part b for
 #        daily grooming. What do you think is the reason for this difference?
 #       [code completion + interpretation]
-##      Because this does only apply for daily grooming but select rows where grooming has data 
+##      Because this does only apply for daily grooming but select rows where grooming has data
+        # emf - answer here a bit unclear - is there a difference in the count from part b?
+        
         #Create a table for grooming categories
         grooming_table <- table(dogs$grooming)
         #Print out the table
@@ -175,7 +181,7 @@ dogs = readRDS('dogs.rds')
 #     b. By getting a subset of only terriers and counting the rows.
 #       [code completion + comprehension]
 #       # Count the rows where the group is "terrier"
-        terrier_count <- sum(dogs$group == "terrier", na.rm = TRUE)
+        terrier_count <- sum(dogs$group == "terrier", na.rm = TRUE) # emf - this does not quite satisfy the directions to get a subset of only terriers 
         # Print the count of terrier dogs
         print(terrier_count)
         

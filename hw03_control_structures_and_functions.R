@@ -1,3 +1,5 @@
+#emf -  good! I left a few comments below (can look for "emf”). A few more lines of direct translation of code (specifically when you are doing something new/that we just covered in class) will strengthen your responses for future homeworks. 
+
 # This file contains homework questions for the lecture on 
 # Control Structures and Functions.  Questions appear as comments 
 # in the file.  Place your answers as executable code immediately 
@@ -37,6 +39,7 @@ if (x == y){
 # the appropriate message to screen accordingly.
 # Checking if x is not equal to y
 if (x != y){
+  #emf - missing part of the code from above! (asking you to duplicate) - just using, what happens if values of x and y are equal?
     print("x IS NOT EQUIVALENT to y")
 }
 
@@ -83,7 +86,7 @@ x <- 1
 
 # While loop to iterate 10 times and print to the screen
 while (x <= 10) {
-  cat(x, " ")
+  cat(x, " ") #emf - would be useul to explain what "cat" is doing here and why you chose to do this
   x <- x + 1
 }
 
@@ -110,7 +113,7 @@ for (i in brands) {
 # to screen. Otherwise print, "This is a car" to screen.
 # Loop through each item in the vector
 for (i in brands) {
-  if (i %in% c("Harley", "Indian")) {
+  if (i %in% c("Harley", "Indian")) { #emf - this works, but need to explain how the %n% operator is working- why not use a different conditional statement here?
     print("This is a motorcycle")
   } else {
     print("This is a car")
