@@ -1,3 +1,5 @@
+# emf - excellent work! See comments/suggestions below by searching for "emf".
+
 ################################################################
 # This file contains questions for the midterm exam for        #
 # IST008 Adventures in Data Science:  Social Science Edition,  #
@@ -111,6 +113,8 @@ wine_revs = read.csv("wine_enthusiast_rankings.csv")
 class_wine_revs <- class(wine_revs)
 print(class_wine_revs)
 
+# emf - do not need to create a new R object to answer this question - can just use "class(wine_revs)" and interpret the output in the console 
+
 #
 
 # Question 10. Write code that returns the column/variable
@@ -118,10 +122,12 @@ print(class_wine_revs)
 # Show the names of the columns
 column_names <- colnames(wine_revs)
 print(column_names)
+
 # This show both names of the columns and the type of data for each columns
 column_classes <- sapply(wine_revs, class)
 print(column_classes)
 
+# emf - same comment as #9
 
 # Question 11. Write code to load all observations from the
 # "price" column/variable of the "wine_revs" object into
