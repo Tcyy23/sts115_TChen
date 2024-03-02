@@ -1,3 +1,6 @@
+# emf - good job! some points were lost from incomplete answers. 
+# you can find comments below by searching for "emf"
+
 # Directions:
 
 # This file contains homework questions for the lecture on data forensics
@@ -51,10 +54,13 @@
       # Print the number of rows and columns
       print(num_rows)
       print(num_cols)
+      #emf - good - can also use the "dim()" function here & do not need to create new R objects to answer this question
 #     b. The names of the columns. [code completion + comprehension]
 #
       column_classes <- sapply(cl, class)
       print(column_classes)
+      #emf this returns the class of each column - not the names (i.e. variable names)
+      
 #     c. A structural summary of the data. [code completion + comprehension]
 
       # Get the Structural summary of the data frame 'cl'
@@ -123,6 +129,7 @@
       period_covered <- range(cl$date_posted)
       # Print the result
       print(period_covered)
+      # emf - make sure you write out your answer here as well - given the output, what time period does this data cover?
 
 # 8. Compute the mean price for each pets category. Based on the means, are
 #    apartments that allow pets typically more expensive? Explain, being
@@ -133,8 +140,10 @@
       # calculate the mean price using 'FUN=mean' for each group.
       mean_price_by_pets <- aggregate(price ~ pets, data = cl, FUN = mean)
       
+      
       # Print the result
       print(mean_price_by_pets)
+      #emf - missing second part of the question where you interpret the output and come up with a hypothesis 
 
 
 # 9. The `sort` function sorts the elements of a vector. For instance, try
@@ -203,6 +212,7 @@
 #       No because I think most of the data values are collect and recorded correctly
       # and I got the smallest 20 and the largest 5 data from the 'sorted_cl list
       # most of them seem legit
+      # emf - smallest apt is 200 - not 20 sqft/good info but does not answer the question directly - need to specify what you mean by "seem legit" 
       
 #     c. Do you think any of the 5 square footage values are erroneous
 #        (incorrect in the data)? [interpretation]
@@ -210,5 +220,7 @@
       # It could because from the data set I found two values is a lot larger than expected,
       # and the 'price' is not normal than most of the other for it 'sqft'.
       # But most of the value seem correct to me.
+      
+      # emf - what specific two values are you talking about here?
 
 
