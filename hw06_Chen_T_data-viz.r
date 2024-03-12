@@ -1,3 +1,5 @@
+# emf - good job overall - you can find comments below by searching for "emf"
+
 # Directions:
 
 # This file contains homework questions for the lecture on data visualization.
@@ -76,6 +78,8 @@ ggplot(dogs, aes(x = height, y = weight)) +
       ggtitle("Number of Dogs in Each Group by Size")
 # Using the "dodge" position argument, we can present each size category side by side 
 # within each group, allowing for a clear visual comparison of the distribution of dog sizes within each group.
+    
+    # emf - good - the bars in this plot have some variation in their widths based on how many size categories are included - is there a way to make these more uniform?
 
 
 # 3.
@@ -112,6 +116,8 @@ ggplot(dogs, aes(x = height, y = weight)) +
       geom_point(color = "#219ebc") + 
       labs(x = "Height", y = "Weight") +
       ggtitle("Relationship between Height and Weight")
+    
+    # emf - this plot is missing a representation/shape for the "working" category of dogs - do you know why this happened? do you think this changes your answer for part b and c?
 #   
     
 #   b. Do height and weight effectively separate the different groups of dogs?
@@ -121,6 +127,8 @@ ggplot(dogs, aes(x = height, y = weight)) +
 #      [interpretation]
     # There is a better view between the group in the plot, 
     # but because the color of the shape is the same, it still isn't effective enough.
+    # emf - it seems like you are commenting on the effectiveness of the visualization rather than whether height and weight "effectively" separate the different groups
+    
 #   c. How might you improve the readability of this graph in order to visualize
 #      this potential relationship more clearly?
 #      [interpretation]
@@ -167,6 +175,9 @@ ggplot(dogs, aes(x = height, y = weight)) +
 #       and suggest a few changes to improve the graphic.
     # The percentage of the glucose and fructose, they are closed on percentage but on the visualization
     # The fructose seems a lot larger than glucose. 
+    
+    # emf - missing suggestions for changes to improve the visualization
+    
 #   d. Describe in 1-2 sentences one thing that this visualization actually already does well.
 # The shape of the graph is the most notable one which is quiet creative, and the color choice of it is also really great, 
 # it choice the that is well represent the honey and didn't effect the readability. 
@@ -179,6 +190,8 @@ ggplot(dogs, aes(x = height, y = weight)) +
     # the group of dogs
     #  "herding"      "terrier"      "sporting"     "toy"          "working"     
     # "non-sporting" "hound"
+    # emf - unclear how you are answering 7a
+    
 #    b. Write the code to generate this plot. (Hint: start with identifying the 
 #        variables on each axis, then think about the types of channels).
 unique_groups <- unique(data$group)
@@ -206,3 +219,4 @@ ggplot(dogs, aes(x = longevity, y = lifetime_cost, color = group, shape = group)
   # Adjust shape codes manually
   scale_shape_manual(values = c(1, 2, 3, 4, 5, 6, 7)) 
 
+# emf - good modifications! 
