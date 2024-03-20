@@ -1,3 +1,5 @@
+# emf - good job! see comments below
+
 # Directions:
 
 # This file contains homework questions for the lecture on data visualization.
@@ -51,7 +53,7 @@ print(formatted_text)
 # sentences.
 
 x <- "I am here. \nAm I alive"
-x <- str_replace_all(x, "\\n", "\n")
+x <- str_replace_all(x, "\\n", "\n") # emf - what is your reasoning for doing this?
 cat(x)
 
 
