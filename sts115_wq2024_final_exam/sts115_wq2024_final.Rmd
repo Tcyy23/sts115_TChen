@@ -1,0 +1,272 @@
+---
+title: "STS 115: Final Exam - WQ 2024"
+output: html_notebook
+---
+
+Welcome to the Winter 2024 Quarter STS115 Final Exam.  To complete the exam, be sure to place the file in your local sts115 directory which you have placed under Git version control on your computer.  After you have placed this file in the proper location, and before answering any questions, add the file to your repository's staging area and run a commit to save the empty version.  Then, take the exam by writing answers to each question in the area provided immediately following each question. You can test and execute any code you write in a chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+A brief note on how this exam will be graded.  As you will see, the questions in this exam are more open-ended than the questions on the midterm exam, requiring you to problem solve rather than simply replicate coding practice. As such, there are many potentially 'correct' answers to each problem.  With this in mind, we are not looking for a particular approach to coding a solution to each problem, but rather we will be assessing your ability to develop and implement a reasonable approach to solving the problem.  As such, even if you aren't able to code a fully functional solution, you can earn significant credit for a problem by simply attempting a solution and explaining how and why that solution would work. To that end, we encourage you to include a lot of comments in your code explaining what you think it is doing and why you are trying to do it.  With this information available, we can award reasonable credit even if you aren't able to get the code syntax exactly correct.
+
+Also, many of the activities in which we engaged in class and during homework require additional r packages such as, for example, `dplyr`, `tm`, and `rvest`, to name a few.  Do not forget to include these packages in your environment [library(dplyr), for example] so that your code will execute.
+
+Any data files that you need to complete this exam were included in the zip file you downloaded to get this file.
+
+And finally, remember that Course Reader, Google, Stack Overflow, and ChatGPT are
+your friends!  You can and should use any resources at your disposal with the 
+exception of live conversation (IRL or virtual) with another human being to help 
+you solve the problems presented here.  
+
+Have fun and good luck!
+
+QUESTION 1 (10 Points): The variable `events`, defined below, contains the dates for several important events in the 20th century. Convert these dates into R `Date` objects.
+
+```{r}
+# Answer Question 1 in this code chunk:
+
+events = c("Thu Apr-11 in 1968", "Tue May-8 in 1945", "Sun Dec-23 in 1900")
+
+# Convert dates in events vector to Date objects
+events_dates <- as.Date(events, format = "%a %b-%d in %Y")
+
+# Display the converted dates
+events_dates
+```
+
+
+QUESTION 2 (10 Points): The variable `menu`, defined below, contains a string from Taqueria Guadalajara's online menu. Use string processing to convert this string into a data frame `burritos` with separate columns `type` and `price`. Make sure the `price` column is numeric.
+
+For reference, the first two rows of the result should be:
+
+                   type price
+ 1       Veggie burrito  7.49
+ 2              Regular  7.99
+ 
+Tips:  
+ 
+1. In order to accomplish this task you will need to first split the string into
+separate menu items and then split each item into a name and price.
+ 
+2. Remember that character vectors can contain hidden characters that the
+computer can see and use to split strings.  Examine the contents of the 'menu'
+variable after you instantiate it and before you try to write code to answer the
+rest of the question.  This will help you to form a better strategy for splitting
+the string.
+ 
+3. You can test and validate text-matching regular expressions using
+the Regex validator at https://regex101.com/.  Use the validator to make sure that
+your Regex works correctly before you use it in your R code.
+
+4. Remember that Regex has many special characters that may require the use
+of an 'escape' character to match on a literal value and that R has a special
+way of 'escaping' Regex escape characters.
+
+```{r}
+# Answer Question 2 in this code chunk:
+
+menu = "BURRITOS
+Veggie burrito ........ 7.49
+Regular ............. 7.99
+Super ............... 9.49
+Super giant .......... 17.99
+Chimichanga ......... 9.99
+Beans, rice & cheese .... 4.99"
+
+# Load the necessary library for string manipulation
+library(stringr)
+
+# Remove "BURRITOS" line from menu
+menu <- gsub("BURRITOS\n", "", menu)
+# Split the menu string into separate lines
+menu_lines <- strsplit(menu, "\n")[[1]]
+# Remove any leading or trailing whitespace from each line
+menu_lines <- trimws(menu_lines)
+# Remove empty lines
+menu_lines <- menu_lines[menu_lines != ""]
+# Extract type and price using regular expressions
+burrito_types <- str_extract(menu_lines, "[A-Za-z ,&]+")
+burrito_prices <- as.numeric(str_extract(menu_lines, "\\d+\\.\\d{2}$"))
+# Create the data frame
+burritos <- data.frame(type = burrito_types, price = burrito_prices)
+#Display the data frame of burritos
+head(burritos)
+
+
+```
+
+QUESTION 3 (20 Points): Use the Cat Facts API documentation at https://alexwohlbruck.github.io/cat-facts/docs/ to make a request to the Cat Facts "facts" endpoint and retrieve 5 random facts about cats. Note that you must properly construct the URL for your request by adding the "endpoint" for your specific request as documented on the site to the "base URL for all endpoints" which is also documented on the site.  All of the information that you need to construct a well-formed URL for your request appears somewhere in the documentation, and you should be able to do using your knowledge of how URLs are constructed.
+
+```{r}
+# Answer Question 3 in this code chunk:
+library(httr)
+library(jsonlite)
+# Construct the URL for retrieving 5 random facts
+base_url <- "https://cat-fact.herokuapp.com"
+endpoint <- "/facts/random"
+params <- list(amount = 5)
+url <- modify_url(base_url, path = endpoint, query = params)
+
+# Make the HTTP GET request
+response <- GET(url)
+
+# Check if the request was successful
+if (http_type(response) == "application/json") {
+  # Extract and print the random facts
+  cat_facts <- content(response, "parsed")
+  for (fact in cat_facts) {
+    cat(fact$text, "\n")
+  }
+} else {
+  cat("Error: Unable to retrieve cat facts.")
+}
+
+```
+
+QUESTION 4 (20 Points): Wikipedia has a table of female Nobel Laureates at:
+
+     https://en.wikipedia.org/wiki/List_of_female_Nobel_laureates
+
+Write some code that scrapes the page to get a data frame with the year, name, country, and category for each laureate.
+
+You DO NOT need to worry about cleaning up the text to remove footnotes, parenthetical notes, dual countries, or dual categories for this question.
+
+```{r}
+# Answer Question 4 in this code chunk:
+library(xml2) # package for parsing xml documents
+library(rvest) # package for web scraping
+
+# define the URL
+wiki_url = "https://en.wikipedia.org/wiki/List_of_female_Nobel_laureates"
+
+# load the page
+wiki_doc = read_html(wiki_url)
+
+# the info we are looking for is in a table
+# so let's extract the table
+tables = xml_find_all(wiki_doc, "//table")
+# look at it
+class(tables)
+str(tables)
+tables
+tab = xml_find_all(tables, "//*[contains(@class, 'wikitable')]")
+
+laur = html_table(tab, fill = TRUE)
+# extract the first element of the list
+laur = laur[[1]]
+# Remove the unnecessary rows and columns
+laur <- laur[-c(1, nrow(laur)), ] # Remove the first and last rows which contain headers and footnotes
+laur <- laur[-c(1), ] # Remove the duplicated header row
+
+laur <- laur[, -c(1,3)]
+
+# Remove extra header row
+rows_to_remove <- c(14, 15, 21, 22, 31, 32, 50, 51, 71, 72)
+
+# Remove the specified rows
+laur <- laur[-rows_to_remove, ]
+# Name each column
+colnames(laur) <- c("Year", "Name", "Country Born", "Country Died", "Rationale")
+# View the resulting data frame
+View(laur)
+
+
+```
+
+QUESTION 5 (20 Points): The file `nobel_laureates.rds` (included in the zip file you downloaded that contains this exam file) contains a data.frame with pre-scraped information about the female Nobel Laureates you scraped above in question 4. Each row corresponds to one laureate.
+
+Provide a short answer and/or code to address each of these questions:
+
+a. How many rows and columns are in the data set? (5 Points)
+b. What are the names and classes of the columns in the data set? (5 points)
+c. How many missing values are in each column? (5 Points)
+d. How many missing values are in the data set in total? (5 Points)
+
+```{r}
+# Use this code chuck for any code you use to help answer 
+# Question 5.  Narrative answers to the question can present
+# here as comments or in the narrative answer block below
+nobel = readRDS('nobel_laureates.rds')
+# a.
+# Number of rows and columns
+num_rows <- nrow(nobel)
+num_cols <- ncol(nobel)
+cat("Number of rows:", num_rows, "\n")
+cat("Number of columns:", num_cols, "\n")
+# b.
+# Names and classes of columns
+col_info <- sapply(nobel,class)
+col_info
+# c.
+# Number of missing values in each column
+missing_per_column <- colSums(is.na(nobel))
+missing_per_column
+# d.
+# Total number of missing values in the data set
+total_missing <- sum(missing_per_column)
+total_missing
+
+# a. Number of rows: 58 
+#    Number of columns: 7 
+# b.        
+#   Year    Laureate     Country    Country2    Category   Category2        Note 
+# "integer" "character"    "factor"    "factor"    "factor"    "factor" "character" 
+# c. 
+#       Year  Laureate   Country  Country2  Category Category2      Note 
+#        0         0         0        50         0        46        29 
+# d. There are 125 data missing in the data frame
+
+```
+
+```
+Use this area for any additional narrative answers you want to
+Provide for Question 5
+
+
+```
+
+QUESTION 6 (20 Points): The file `nobel_laureates_messy.rds` (included in the zip file you downloaded that contains this exam file) contains a data frame with information about female Nobel Laureates, scraped from Wikipedia. Note that this is a second version of the Nobel laureates data file that contains different data than the file that you loaded above in Question 5.
+
+In this file, each row corresponds to one laureate. One problem with this data set is that the `Laureate` column sometimes contains a parenthetical note in addition to the laureate's name. Separate the name of each laureate from these notes, so that the name is alone in the `Laureate` column, and the note is stored in a new column `Note`.
+
+Also make sure there are no parentheses in the text in the `Note` column. For rows where there is no note, the value of the note should be `NA` or the empty string `""` (either is acceptable, but don't use a mix of both).  This question will require you to apply various skills that we learned in this course, including manipulating the columns of a data.frame and using regular expressions to identify substrings within a string.  
+
+Tips: 
+
+1. Don't forget the Regex Tips offered for Question 2 above.
+
+3. The question asks you to apply computational operations across all rows/observations in the data.frame.  There are several ways to apply the same
+function to all observations in R.  Before you begin coding, think about how
+you will accomplish this iteration.  
+
+```{r}
+# Answer Question 6 in this code chunk:
+library(cluster)
+library(tidyverse)
+library(tokenizers)
+library(tm)
+data <- readRDS("nobel_laureates_messy.rds")
+# Separate the name from the note using regular expressions
+data <- data %>%
+  mutate(Note = str_extract(Laureate, "\\(.*\\)"),
+         Laureate = str_replace(Laureate, "\\s*\\(.*\\)", ""))
+# Remove parentheses from the Note column
+data$Note <- gsub("\\(|\\)", "", data$Note)
+# Replace empty strings with NA in the Note column
+data$Note[data$Note == ""] <- NA
+# View the updated data
+View(data)
+```
+
+
+INSTRUCTIONS FOR SUBMITTING YOUR EXAM
+
+Once you have completed your exam, you will submit your work via Git and GitHub using the same process that you used to submit your homework assignments for the course:
+
+1. Navigate to your sts115 directory using the command line;
+
+2. Run the "git add" command as needed to add any changed files to the stating area.  (Note that there may be additional files generated by RStudio during the process, such as an .html file.  Be sure to add these as well.);
+
+3. Run "git commit -m '<add any comments you wish to make on the assignment or your work>'";
+
+4. Run "git push" to push your repo to Github for grading.
+
+Congratulations on completing your exam.  We look forward to seeing everyone next quarter for some active research!
