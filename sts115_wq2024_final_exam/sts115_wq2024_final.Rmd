@@ -3,6 +3,9 @@ title: "STS 115: Final Exam - WQ 2024"
 output: html_notebook
 ---
 
+```
+emf - excellent work! :)
+```
 Welcome to the Winter 2024 Quarter STS115 Final Exam.  To complete the exam, be sure to place the file in your local sts115 directory which you have placed under Git version control on your computer.  After you have placed this file in the proper location, and before answering any questions, add the file to your repository's staging area and run a commit to save the empty version.  Then, take the exam by writing answers to each question in the area provided immediately following each question. You can test and execute any code you write in a chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
 
 A brief note on how this exam will be graded.  As you will see, the questions in this exam are more open-ended than the questions on the midterm exam, requiring you to problem solve rather than simply replicate coding practice. As such, there are many potentially 'correct' answers to each problem.  With this in mind, we are not looking for a particular approach to coding a solution to each problem, but rather we will be assessing your ability to develop and implement a reasonable approach to solving the problem.  As such, even if you aren't able to code a fully functional solution, you can earn significant credit for a problem by simply attempting a solution and explaining how and why that solution would work. To that end, we encourage you to include a lot of comments in your code explaining what you think it is doing and why you are trying to do it.  With this information available, we can award reasonable credit even if you aren't able to get the code syntax exactly correct.
@@ -184,7 +187,7 @@ d. How many missing values are in the data set in total? (5 Points)
 # Use this code chuck for any code you use to help answer 
 # Question 5.  Narrative answers to the question can present
 # here as comments or in the narrative answer block below
-nobel = readRDS('nobel_laureates.rds')
+#nobel = readRDS('nobel_laureates.rds')
 # a.
 # Number of rows and columns
 num_rows <- nrow(nobel)
@@ -243,7 +246,7 @@ library(cluster)
 library(tidyverse)
 library(tokenizers)
 library(tm)
-data <- readRDS("nobel_laureates_messy.rds")
+#data <- readRDS("nobel_laureates_messy.rds")
 # Separate the name from the note using regular expressions
 data <- data %>%
   mutate(Note = str_extract(Laureate, "\\(.*\\)"),
